@@ -1,10 +1,8 @@
 defmodule Inflex.Camelize do
   @moduledoc false
 
-  @camelize_regex ~r/(?:^|[-_])|(?=[A-Z][a-z])/
-
   def camelize(word, option \\ :upper) do
-    case Regex.split(@camelize_regex, to_string(word)) do
+    case Regex.split(camelize_regex(), to_string(word)) do
       words ->
         words
         |> Enum.filter(&(&1 != ""))
@@ -25,4 +23,6 @@ defmodule Inflex.Camelize do
 
   def capitalize(word), do: String.capitalize(word)
   def lowercase(word), do: String.downcase(word)
+
+  defp camelize_regex, do: ~r/(?:^|[-_])|(?=[A-Z][a-z])/
 end
